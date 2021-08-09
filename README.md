@@ -1,0 +1,1 @@
+This project will consist of building a simple game of rock paper scissor using JS for The Odin Project. The first half of this project will only consist of getting the game working in the console and will be added to later in the corse to include a GUI.
