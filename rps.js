@@ -20,7 +20,10 @@ function win(playerSelection, computerSelection) {
     userScore_span.innerHTML = userScore;
     const smallPlayer = "PLAYER".fontsize(3).sub();
     const smallComp = "COMP".fontsize(3).sub();
+    const playerSelection_btn = document.getElementById(playerSelection);
     result_p.innerHTML = `YOU WIN!! ${playerSelection}${smallPlayer} beats ${computerSelection}${smallComp} .`
+    playerSelection_btn.classList.add('green-glow');
+    setTimeout(() => playerSelection_btn.classList.remove('green-glow'), 300);
 }
 // function for when player loses
 function lose(playerSelection, computerSelection) {
@@ -28,11 +31,17 @@ function lose(playerSelection, computerSelection) {
     computerScore_span.innerHTML = computerScore;
     const smallPlayer = "PLAYER".fontsize(3).sub();
     const smallComp = "COMP".fontsize(3).sub();
+    const playerSelection_btn = document.getElementById(playerSelection);
     result_p.innerHTML = `YOU LOSE... ${computerSelection}${smallComp} beats ${playerSelection}${smallPlayer} .`
+    playerSelection_btn.classList.add('red-glow');
+    setTimeout(() => playerSelection_btn.classList.remove('red-glow'), 300);
 }
 // function for a draw
 function draw(playerSelection) {
+    const playerSelection_btn = document.getElementById(playerSelection);
     result_p.innerHTML = `DRAW... you and the computer selected ${playerSelection}.`
+    playerSelection_btn.classList.add('gray-glow');
+    setTimeout(() => playerSelection_btn.classList.remove('gray-glow'), 300);
 }
 
 // runs a round of the game
@@ -47,14 +56,9 @@ function playRound(playerSelection) {
 
 // Adds event listeners and runs the game function when clicked
 function game(){
-    rock_btn.addEventListener('click', () => 
-        playRound("rock"));
-
-    paper_btn.addEventListener('click', () => 
-        playRound("paper"));
-
-    scissors_btn.addEventListener('click', () => 
-        playRound("scissors"));
+    rock_btn.addEventListener('click', () => playRound("rock"));
+    paper_btn.addEventListener('click', () => playRound("paper"));
+    scissors_btn.addEventListener('click', () => playRound("scissors"));
 }
 
 game();
