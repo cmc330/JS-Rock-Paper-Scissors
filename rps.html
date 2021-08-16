@@ -2,14 +2,39 @@
 <html>
   <head>
     <title>RPS</title>
+    <link rel="stylesheet" href="styles.css"/>
     <script src='rps.js' defer></script>
     <meta charset="UTF-8"/>
   </head>
+
+  <header>
+    <h1>Rock Paper Scissors</h1>
+  </header>
+
   <body>
-    <div class="moveBtns">
-      <button id='btnR' class="btn">Rock</button>
-      <button id='btnP'class="btn">Paper</button>
-      <button id='btnS'class="btn">Scissors</button>
-    </div>  
+    <div class="score-board">
+      <div id="user-label" class="badge">USER</div>
+      <div id="comp-label" class="badge">COMP</div>
+      <span id="user-score">0</span>:<span id="comp-score">0</span>
+    </div>
+
+    <div class="results">
+      <p>Paper Covers Rock. You Win!</p>
+    </div>
+
+    <div class="choices">
+      <button id="rock" class="choice">
+        <img class="hand" src="https://img.icons8.com/color/48/000000/hand-rock.png"/>
+      </button>
+      <button id="paper" class="choice">
+        <img class="hand"  src="https://img.icons8.com/color/48/000000/hand.png"/>
+      </button>
+      <button id="scissors" class="choice">
+        <img class="hand"  src="https://img.icons8.com/color/48/000000/hand-scissors--v1.png"/>
+        </button>
+    </div>
+
+    <p id="action-message">Make Your Move.</p>
+    
   </body>
 </html>

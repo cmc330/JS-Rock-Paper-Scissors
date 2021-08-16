@@ -1,57 +1,60 @@
-
-game()
+let userScore = 0;
+let computerScore = 0;
+const userScore_span = document.getElementById('user-score');
+const computerScore_span = document.getElementById('comp-score');
+const scoreBoard_div = document.querySelector('.score-board');
+const result_p = document.querySelector('.results > p');
+const rock_btn = document.getElementById('rock');
+const paper_btn = document.getElementById('paper');
+const scissors_btn = document.getElementById('scissors');
 
 // function for the computer turn to choose at random.
-function computerPlay() {    
-    let comp = Math.floor(Math.random() * 3) + 1;
-
-    return comp === 1 ? "ROCK"
-        : comp === 2 ? "PAPER" : "SCISSORS";
-
+function computerPlay() { 
+    let choices = ['rock', 'paper', 'scissors']   
+    let random = Math.floor(Math.random() * 3);
+    return choices[random];
 }
-//function to play a round of rock, paper, scissors and display a win, loss, or draw.
-function playRound(playerSelection, computerSelection) {
-    let win = `You Win!!! ${playerSelection} beats ${computerSelection}.`;
-    let lose = `You Lose... ${computerSelection} beats ${playerSelection}.`;
-    let draw = `Draw! You and the computer chose ${computerSelection}.`;
-
-   return (playerSelection === computerSelection) ? draw 
-        : (playerSelection === "ROCK" && computerSelection === "PAPER") ? lose
-        : (playerSelection === "PAPER" && computerSelection === "SCISSORS") ? lose
-        : (playerSelection === "SCISSORS" && computerSelection === "ROCK") ? lose
-        : win;
+// function for when player wins
+function win(playerSelection, computerSelection) {
+    userScore++;
+    userScore_span.innerHTML = userScore;
+    const smallPlayer = "PLAYER".fontsize(3).sub();
+    const smallComp = "COMP".fontsize(3).sub();
+    result_p.innerHTML = `YOU WIN!! ${playerSelection}${smallPlayer} beats ${computerSelection}${smallComp} .`
+}
+// function for when player loses
+function lose(playerSelection, computerSelection) {
+    computerScore++;
+    computerScore_span.innerHTML = computerScore;
+    const smallPlayer = "PLAYER".fontsize(3).sub();
+    const smallComp = "COMP".fontsize(3).sub();
+    result_p.innerHTML = `YOU LOSE... ${computerSelection}${smallComp} beats ${playerSelection}${smallPlayer} .`
+}
+// function for a draw
+function draw(playerSelection) {
+    result_p.innerHTML = `DRAW... you and the computer selected ${playerSelection}.`
 }
 
-//function to play a 5 round game, keeping score and reporting the winner and loser at the end.
-function game() {
-    let rounds = 1;
-    let playerScore = 0;
-    let computerScore = 0;
-    let draws = 0;
+// runs a round of the game
+function playRound(playerSelection) {
+    const computerSelection = computerPlay();
+    return (playerSelection === computerSelection) ? draw(playerSelection) 
+        : (playerSelection === "rock" && computerSelection === "paper") ? lose(playerSelection, computerSelection)
+        : (playerSelection === "paper" && computerSelection === "scissors") ? lose(playerSelection, computerSelection)
+        : (playerSelection === "scissors" && computerSelection === "rock") ? lose(playerSelection, computerSelection)
+        : win(playerSelection, computerSelection);
+}
 
-    while (rounds < 6) {
-        let playerSelection = PlayerMove();
-        let computerSelection = computerPlay();
+// Adds event listeners and runs the game function when clicked
+function game(){
+    rock_btn.addEventListener('click', () => 
+        playRound("rock"));
+
+    paper_btn.addEventListener('click', () => 
+        playRound("paper"));
+
+    scissors_btn.addEventListener('click', () => 
+        playRound("scissors"));
 }
-    console.log(`round: ${rounds}\t\tPlayer Score: ${playerScore}\t\tComputer Score: ${computerScore}`);
-        let outcome = playRound(playerSelection, computerSelection); 
-            console.log(outcome);
-                outcome.includes("Win") ? playerScore++ 
-                : outcome.includes("Lose") ? computerScore++ 
-                : draws++;
-        rounds++;
-    
-    (playerScore > computerScore) ? console.log(`FINAL SCORE:\t\tPlayer Score: ${playerScore}\t\tComputer Score: ${computerScore}\nCongratulation! You win!`) 
-    : (playerScore < computerScore) ? console.log(`FINAL SCORE:\t\tPlayer Score: ${playerScore}\t\tComputer Score: ${computerScore}\nSorry... You Lose!`) 
-    : console.log(`FINAL SCORE:\tPlayer Score: ${playerScore}\t\tComputer Score: ${computerScore}\nIt's a Draw...`); 
-}
-//function that runs the player move when the button is selected
-function PlayerMove(e) {
-    (e.target.id === 'btnR') ? "ROCK"
-        : (e.target.id === 'btnP') ? "PAPER"
-        : (e.target.id ==='btnS') ? "SCISSORS"
-        : null;
-}
-// add event listeners to buttons to run playerMove on click.
-const btns = document.querySelectorAll('.btn');
-btns.forEach(btn => btn.addEventListener('click', PlayerMove));
+
+game();
